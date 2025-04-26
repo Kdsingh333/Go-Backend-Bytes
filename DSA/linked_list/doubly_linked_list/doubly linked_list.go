@@ -1,12 +1,11 @@
-
-// Implemented Single linked list and their respective function as well  
-package single_linked_list
+package doubly_linked_list
 
 import "fmt"
 
 type Node[T any] struct {
-	Data T
-	Next *Node[T]
+	Previous *Node[T]
+	Data     T
+	Next     *Node[T]
 }
 
 type List[T any] struct {
@@ -15,49 +14,49 @@ type List[T any] struct {
 	Size int64
 }
 
-
 func InitList[T any](data T) *List[T] {
-	TempNode := &Node[T]{Data: data, Next: nil}
+	TempNode := &Node[T]{Data: data, Next: nil, Previous: nil}
 	return &List[T]{Head: TempNode, Size: 1, Tail: TempNode}
 }
 
-func (l *List[T]) InsertNodeAtBeg(data T) {
+func (l *List[T]) InsertAtHead(data T) {
 	//  var Temp *Node
 	if l == nil || l.Head == nil {
-		l.Head = &Node[T]{Data: data, Next: nil}
+		l.Head = &Node[T]{Data: data,Previous: nil, Next: nil}
 		l.Tail = l.Head
 		l.Size = 1
 		return
 	}
 	Head := l.Head
-	tempNode := &Node[T]{Data: data, Next: nil}
+	tempNode := &Node[T]{Data: data, Previous: nil,Next: Head}
 	l.Head = tempNode
 	l.Head.Next = Head
 	l.Size++
 }
 
-func (l *List[T]) InsertNodeAtlast(data T) {
+func (l *List[T]) InsertAtTail(data T) {
 	//  var Temp *Node
 	if l == nil || l.Head == nil {
-		l.Head = &Node[T]{Data: data, Next: nil}
+		l.Head = &Node[T]{Data: data,Previous: nil, Next: nil}
 		l.Tail = l.Head
 		l.Size = 1
 		return
 	}
-	l.Tail.Next = &Node[T]{Data: data, Next: nil}
+	l.Tail.Next = &Node[T]{Data: data, Previous: l.Tail,Next: nil}
 	l.Tail = l.Tail.Next
 	l.Size++
 }
 
-func (l *List[T]) DeleteNodeBeg() {
+func (l *List[T]) DeleteAtHead() {
 	if l == nil {
 		fmt.Println("linked list is under flow")
 		return
 	}
 	current := l.Head.Next
 
-	l.Head = nil
+	// l.Head = nil
 	l.Head = current
+	l.Head.Previous = nil
 	l.Size--
 
 	if l.Size == 0 {
@@ -70,20 +69,28 @@ func (l *List[T]) DeleteNodeLast() {
 		fmt.Println("linked list is under flow")
 		return
 	}
-	current := l.Head
-	for current.Next != l.Tail {
-		current = current.Next
-	}
+	
+	
+	current := l.Tail.Previous
 	current.Next = nil
 	l.Tail = current
 	l.Size--
 }
 
-func (l *List[T]) PrintList() {
+func (l *List[T]) PrintListForward() {
 	Head := l.Head
 	for Head.Next != nil {
 		fmt.Print(Head.Data, "<-")
 		Head = Head.Next
+	}
+	fmt.Print(Head.Data)
+	fmt.Println()
+}
+func (l *List[T]) PrintListBackward() {
+	Head := l.Tail
+	for Head.Previous!= nil {
+		fmt.Print(Head.Data, "<-")
+		Head = Head.Previous
 	}
 	fmt.Print(Head.Data)
 	fmt.Println()
@@ -93,21 +100,22 @@ func (l *List[T]) GetSize() int64 {
 	return l.Size
 }
 
-func DemoSlinkedList() {
+func DemoDoublylinkedList() {
 	// LL := &List[string]{}  // Both are the same this is using direct struct
 	LL := InitList("Kuldeep") // this some how we can say that mimicing the constructor func
-	LL.InsertNodeAtBeg("Pushp")
-	fmt.Println("Current size of list : ", LL.GetSize())
-	LL.InsertNodeAtlast("Ram")
-	fmt.Println("Current size of list : ", LL.GetSize())
-	LL.InsertNodeAtBeg("Shyam")
-	fmt.Println("Current size of list : ", LL.GetSize())
-	LL.InsertNodeAtlast("Gagan")
-	fmt.Println("Current size of list : ", LL.GetSize())
-	LL.PrintList()
-	LL.DeleteNodeBeg()
-	LL.PrintList()
+	LL.InsertAtHead("Pushp")
+	// fmt.Println("Current size of list : ", LL.GetSize())
+	LL.InsertAtTail("Ram")
+	// fmt.Println("Current size of list : ", LL.GetSize())
+	LL.InsertAtTail("Shyam")
+	// fmt.Println("Current size of list : ", LL.GetSize())
+	LL.InsertAtTail("Gagan")
+	// fmt.Println("Current size of list : ", LL.GetSize())
+	LL.PrintListForward()
+	LL.DeleteAtHead()
+	LL.PrintListForward()
 	LL.DeleteNodeLast()
-	LL.PrintList()
+	LL.PrintListForward()
 	fmt.Println("Current size of list : ", LL.GetSize())
+	LL.PrintListBackward()
 }
