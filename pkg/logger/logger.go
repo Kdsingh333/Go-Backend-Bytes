@@ -5,12 +5,11 @@ import (
 	"fmt"
 	"path"
 	"strings"
-	"time"
 
 	"github.com/sirupsen/logrus"
 )
 
-// Formatter implements logrus.Formatter interface.
+// Formatter implements logrus.Formatter interface without time
 type formatter struct {
 	prefix string
 }
@@ -35,6 +34,7 @@ func init() {
 	logger.Formatter = &formatter{}
 	logger.SetReportCaller(true)
 }
+
 func GetLogger() *logrus.Logger {
 	return logger
 }
@@ -43,12 +43,10 @@ func SetLogLevel(level logrus.Level) {
 	logger.Level = level
 }
 
-// Format building log message.
+// Format builds log message WITHOUT time
 func (f *formatter) Format(entry *logrus.Entry) ([]byte, error) {
 	var sb bytes.Buffer
 	sb.WriteString(strings.ToUpper(entry.Level.String()))
-	sb.WriteString(" ")
-	sb.WriteString(entry.Time.Format(time.RFC3339))
 	sb.WriteString(" ")
 	sb.WriteString(f.prefix)
 	sb.WriteString(fmt.Sprintf("%s:%d", path.Base(entry.Caller.File), entry.Caller.Line))

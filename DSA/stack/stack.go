@@ -4,9 +4,11 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/Kdsingh333/Go-Backend-Bytes/pkg/logger"
 	"golang.org/x/exp/constraints"
 )
-// In this tutorial I have tried comparable , any , constraints.ordered interface as I have to add 
+
+// In this tutorial I have tried comparable , any , constraints.ordered interface as I have to add
 // equality check  and do sum of the data element so the suitable interface ordered one
 
 // Function	Purpose
@@ -15,7 +17,7 @@ import (
 // peek() or top()	 View the top item without removing
 // isEmpty()	     Check if the stack is empty
 // size()	         Get the number of items in the stack
- 
+
 type Stack[T constraints.Ordered] struct {
 	Array []T
 }
@@ -49,7 +51,6 @@ func (s *Stack[T]) Pop() (T, error) {
 	return item, nil
 }
 
-
 func (s *Stack[T]) Clear() {
 	s.Array = nil
 }
@@ -65,11 +66,9 @@ func (s *Stack[T]) Contains(item T) bool {
 	return false
 }
 
-
 func (s *Stack[T]) IsEmpty() bool {
 	return len(s.Array) == 0
 }
-
 
 func (s *Stack[T]) Peek() (T, error) {
 	if s.IsEmpty() {
@@ -100,7 +99,7 @@ func DemoStack() {
 	s.Push("E")
 	s.Push("E")
 	s.Push("P")
-	fmt.Println("Sum of all the values :",s.Sum())
+	logger.Info("Sum of all the values :", s.Sum())
 	item, err := s.Pop()
 	if err != nil {
 		fmt.Println(err)
@@ -116,7 +115,6 @@ func DemoStack() {
 	fmt.Println(s.IsEmpty())
 	fmt.Println(s.Size())
 
-	
 	s.Clear()
 	fmt.Println(s.IsEmpty())
 	item, err = s.Pop()
