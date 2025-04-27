@@ -6,6 +6,8 @@ import (
 
 	"golang.org/x/exp/constraints"
 )
+// In this tutorial I have tried comparable , any , constraints.ordered interface as I have to add 
+// equality check  and do sum of the data element so the suitable interface ordered one
 
 // Function	Purpose
 // push(item)	     Add an item to the top of the stack
