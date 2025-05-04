@@ -33,6 +33,10 @@ type IStack[T constraints.Ordered] interface {
 	Sum() T
 }
 
+func ConstrunctQueue[T constraints.Ordered]() IStack[T] {
+	return &Stack[T]{}
+}
+
 func InitStack[T constraints.Ordered]() *Stack[T] {
 	return &Stack[T]{}
 }
@@ -91,7 +95,9 @@ func (s *Stack[T]) Sum() T {
 }
 
 func DemoStack() {
-	s := InitStack[string]()
+	// s := InitStack[string]()
+	s := ConstrunctQueue[string]()
+
 	s.Push("k")
 	s.Push("U")
 	s.Push("L")
