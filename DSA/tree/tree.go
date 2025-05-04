@@ -98,7 +98,7 @@ func (t *Tree[T]) Display(level int) {
 		return
 	}
 
-	fmt.Printf("%s%v\n", strings.Repeat("  ", level), t.Data)
+	fmt.Printf("%s%v\n", strings.Repeat(" ", level*3)+"|_", t.Data)
 
 	for _, child := range t.Child {
 		child.Display(level + 1)
