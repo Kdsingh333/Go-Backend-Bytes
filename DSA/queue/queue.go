@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"golang.org/x/exp/constraints"
+	"github.com/Kdsingh333/Go-Backend-Bytes/DSA/generic"
 )
 
 // enqueue(x)	         Add an element x to the rear (end) of the queue.
@@ -13,7 +13,7 @@ import (
 // isEmpty()	         Check whether the queue has no elements.
 // size()	             Get the number of elements in the queue.
 
-type Queue[T constraints.Ordered] struct {
+type Queue[T generic.Ordered] struct {
 	Array []T
 }
 
@@ -25,7 +25,7 @@ type Queue[T constraints.Ordered] struct {
 // 		~string
 // }
 
-type IQueue[T constraints.Ordered] interface {
+type IQueue[T generic.Ordered] interface {
 	Enqueue(item T)
 	Dequeue() (T, error)
 	Peek() (T, error)
@@ -37,11 +37,11 @@ type IQueue[T constraints.Ordered] interface {
 	Equals(other *Queue[T]) bool
 }
 
-func ConstructQueue[T constraints.Ordered]() IQueue[T] {
+func ConstructQueue[T generic.Ordered]() IQueue[T] {
 	return &Queue[T]{}
 }
 
-func InitQueue[T constraints.Ordered]() *Queue[T] {
+func InitQueue[T generic.Ordered]() *Queue[T] {
 	return &Queue[T]{}
 }
 
